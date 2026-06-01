@@ -214,3 +214,18 @@ footer {
   transform: translateY(-2px);
   box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
+/* Home CTA button styles */
+.home-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 60px;
+    min-width: 200px;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 50px;
+    transition: transform 0.2s ease;
+}
+.home-cta:hover {
+    transform: translateY(-2px);
+}
