@@ -1,11 +1,11 @@
-title: Chordially Invited
+﻿title: Chordially Invited
 description: The Band - Live Music for Weddings & Events
 author: Chordially Invited
 url: "https://annabellesouthcoat-beep.github.io/Chordially-Invited/"
 baseurl: "/Chordially-Invited"
 
 # Build settings
-theme: jekyll-theme-cayman
+# theme: jekyll-theme-cayman
 plugins:
   - jekyll-feed
 
