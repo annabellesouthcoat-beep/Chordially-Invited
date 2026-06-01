@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gigs | Chord-ially Invited</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/x-icon" href="images/Favicon files/favicon.ico">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg sticky-top navbar-light">
+    <div class="container">
+        <a class="navbar-brand" href="index.html">
+            <img src="images/logo-banner.png" alt="Chord-ially Invited" height="50">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto text-center">
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="about.html">The Band</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="lineupDropdown" data-bs-toggle="dropdown">The Lineup</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="vocals.html">Vocals: Em</a></li>
+                        <li><a class="dropdown-item" href="lead-guitar.html">Lead Guitar: Ollie</a></li>
+                        <li><a class="dropdown-item" href="rhythm-guitar.html">Rhythm Guitar: Bob</a></li>
+                        <li><a class="dropdown-item" href="bass.html">Bass: Richard</a></li>
+                        <li><a class="dropdown-item" href="drums.html">Drums: Bella</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item"><a class="nav-link" href="gigs.html">Live Dates</a></li>
+                <li class="nav-item"><a class="nav-link" href="setlist.html">Setlist</a></li>
+                <li class="nav-item"><a class="nav-link" href="media.html">Media</a></li>
+                <li class="nav-item"><a class="nav-link" href="contact.html">Book Us</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<main class="container hero-section">
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            
+            <h1 class="page-title" style="color: var(--primary-blue); font-weight: 800; letter-spacing: 2px;">LIVE DATES <span style="color: #333;">| 2026</span></h1>
+
+            <div class="pt-5 pb-4 text-center">
+                <h6 class="text-uppercase fw-bold mb-2" style="color: var(--logo-gold); letter-spacing: 3px;">Where to find us next</h6>
+                <h2 id="next-venue" class="display-4 fw-bold mb-1" style="color: var(--primary-blue); text-transform: uppercase;">Checking Calendar...</h2>
+                <p id="next-date-time" class="lead text-muted mb-4"></p>
+                <div style="width: 60px; height: 4px; background: var(--logo-gold); margin: 0 auto;"></div>
+            </div>
+
+            <div class="d-flex align-items-center justify-content-center mb-4">
+                <div style="flex-grow: 1; height: 1px; background: #eee; max-width: 100px;"></div>
+                <span class="mx-3 small text-muted text-uppercase fw-bold" style="letter-spacing: 2px;">Full Schedule</span>
+                <div style="flex-grow: 1; height: 1px; background: #eee; max-width: 100px;"></div>
+            </div>
+
+            <div class="table-responsive">
+               <table class="table gigs-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Date</th>
+                            <th scope="col">Venue</th>
+                            <th scope="col">Location</th>
+                            <th scope="col">Info</th>
+                        </tr>
+                    </thead>
+                    <tbody id="gigs-list">
+                        </tbody>
+               </table>
+            </div>
+
+            <div class="bg-white p-5 rounded border mt-5 text-center shadow-sm">
+                <h3>Want to book us?</h3>
+                <p class="text-muted">We are currently taking bookings for 2026/27.</p>
+                <div class="mt-4">
+                    <a href="contact.html" class="cta-btn">Enquire About a Date</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <div class="container">
+        <img src="images/logo-badge.png" alt="Logo" height="80" class="mb-3">
+        <div class="mb-4">
+            <a href="https://www.facebook.com/profile.php?id=61587509396329" target="_blank" class="mx-3" style="color: var(--primary-blue); font-size: 1.8rem; text-decoration: none;">
+                <i class="bi bi-facebook"></i>
+            </a>
+            <a href="https://www.instagram.com/chordiallyinvitedband/" class="mx-3" style="color: #E4405F; font-size: 1.8rem; text-decoration: none;">
+                <i class="bi bi-instagram"></i>
+            </a>
+        </div>
+        <p class="mb-0">&copy; 2026 Chord-ially Invited. | Westbury, Wilts</p>
+        <p class="small text-muted">Professional Party & Wedding Entertainment</p>
+    </div>
+</footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // This is your Published CSV link
+    const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTPfgs0-2mCcPgoHXwgHiNoNmYU0Wmp9Y3G0a79xQsV5tLDYFY_9CSOLWGsrk10OUQUh6M2l3A29_-K/pub?output=csv"; 
+    
+    Papa.parse(sheetURL, {
+        download: true,
+        header: true,
+        skipEmptyLines: true,
+        complete: function(results) {
+            const data = results.data;
+            const tableBody = document.getElementById("gigs-list");
+            const venueDisplay = document.getElementById("next-venue");
+            const dateDisplay = document.getElementById("next-date-time");
+            
+            const now = new Date();
+            now.setHours(0, 0, 0, 0); // Today's date at midnight
+
+            // 1. Filter: Only keep dates that are today or in the future
+            let upcomingGigs = data.filter(gig => {
+                if (!gig.ISO_Date) return false;
+                const gigDate = new Date(gig.ISO_Date);
+                return gigDate >= now;
+            });
+
+            // 2. Sort: Ensure they are in chronological order
+            upcomingGigs.sort((a, b) => new Date(a.ISO_Date) - new Date(b.ISO_Date));
+
+            // 3. Clear existing "Loading" state
+            tableBody.innerHTML = "";
+
+            if (upcomingGigs.length > 0) {
+                // Update Hero Banner with the very next gig
+                const next = upcomingGigs[0];
+                venueDisplay.innerText = next.Venue;
+                dateDisplay.innerHTML = `${next.Display_Date} <span class="mx-2">|</span> ${next.Location}`;
+
+                // Populate Table
+                upcomingGigs.forEach(gig => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <th scope="row">${gig.Display_Date}</th>
+                        <td class="fw-bold">${gig.Venue}</td>
+                        <td>${gig.Location}</td>
+                        <td>${gig.Info || ''}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            } else {
+                // If no future gigs found
+                venueDisplay.innerText = "New Dates Coming Soon";
+                dateDisplay.innerText = "We're currently updating our 2026 calendar.";
+                tableBody.innerHTML = `<tr><td colspan="4" class="text-center py-4 text-muted">Check back soon for new announcements!</td></tr>`;
+            }
+        },
+        error: function(err) {
+            console.error("Error fetching sheet:", err);
+            document.getElementById("next-venue").innerText = "Calendar Offline";
+        }
+    });
+});
+</script>
+
+</body>
+</html>

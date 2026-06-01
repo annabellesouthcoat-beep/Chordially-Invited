@@ -1,0 +1,199 @@
+/* 1. BRAND VARIABLES */
+:root {
+    --primary-blue: #0A99D1;
+    --logo-gold: #FBC53E;
+    --bg-offwhite: #F9F9F9;
+    --text-main: #333;
+}
+
+/* 2. GENERAL STYLES */
+body {
+    background-color: var(--bg-offwhite);
+    color: var(--text-main);
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    line-height: 1.8;
+}
+
+/* 3. THE NAVBAR FIX */
+.navbar { 
+    background-color: #fff; 
+    border-bottom: 3px solid var(--primary-blue);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05); 
+}
+
+.nav-link { 
+    color: #555 !important; 
+    text-transform: uppercase; 
+    font-weight: bold; 
+    letter-spacing: 1px; 
+    font-size: 0.9rem;
+}
+
+.nav-link:hover { 
+    color: var(--primary-blue) !important; 
+}
+
+/* 4. THE INVISIBLE IMAGE CONTAINER (Fixes Grey/Black Bars) */
+.blur-container {
+    position: relative;
+    height: 350px;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 8px;
+    background-color: transparent; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: none !important; 
+    border: none !important;
+}
+
+.main-img {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+}
+
+/* 5. THE BUTTON (The Gold Lozenge) */
+.cta-btn { 
+    background-color: var(--logo-gold); 
+    color: #000; 
+    padding: 12px 30px; 
+    border-radius: 50px; 
+    text-decoration: none; 
+    font-weight: bold; 
+    text-transform: uppercase; 
+    display: inline-block; 
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.cta-btn:hover { 
+    background-color: #e5b334; 
+    transform: translateY(-2px); 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
+    color: #000; 
+}
+
+/* 6. MAGAZINE FEATURES */
+.dropcap {
+    float: left;
+    font-size: 3.5rem; /* Adjust size if needed */
+    font-weight: 800;
+    line-height: 0.8; /* This is the key to removing that extra vertical space */
+    padding-top: 4px;
+    padding-right: 8px;
+    padding-left: 3px;
+    color: var(--primary-blue);
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+.interview-q { 
+    color: var(--primary-blue); 
+    font-weight: bold; 
+    text-transform: uppercase; 
+    margin-top: 25px; 
+    display: block; 
+    border-left: 3px solid var(--logo-gold); 
+    padding-left: 10px; 
+}
+
+.rig-box { 
+    background: #fff; 
+    border: 1px solid #eee; 
+    padding: 25px; 
+    border-radius: 8px; 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05); 
+}
+
+/* 7. SPECIAL PAGE FEATURES */
+
+/* Hero / Centered Sections (Index Page) */
+.hero-section {
+    padding: 100px 0;
+    text-align: center;
+}
+
+/* Gigs Table (Gigs Page) */
+.gigs-table {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.gigs-table thead {
+    background-color: var(--primary-blue);
+    color: #fff;
+}
+
+/* Video Containers (Media Page) */
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    height: 0;
+    overflow: hidden;
+    border-radius: 12px;
+    background: #000;
+}
+
+/* Gallery Images (Media Page) */
+.gallery-img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.gallery-img:hover {
+    transform: scale(1.03);
+}
+
+/* 8. FOOTER STYLING */
+footer { 
+    background-color: #fff; 
+    border-top: 1px solid #eee; 
+    padding: 50px 0; 
+    margin-top: 70px; 
+    text-align: center; 
+}
+
+/* 9. MOBILE RESPONSIVENESS */
+@media (max-width: 768px) {
+    .blur-container { height: 280px; }
+    .hero-section { padding: 60px 0; }
+}
+/* Automated Sticky Sidebar Logic */
+.rig-box {
+    position: static;  /* Support for Safari -webkit-sticky; */
+    top: 120px; /* This keeps it below your navbar */
+    z-index: 10;
+    background: #fff;
+    border: 1px solid #eee;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+/* Ensure the sidebar doesn't stick on mobile (where it stacks) */
+@media (max-width: 991px) {
+    .rig-box {
+        position: static;
+        margin-top: 30px;
+    }
+}
+
+/* 3-Column Setlist Layout */
+.g-4 { 
+    gap: 1.5rem; 
+}
+
+.list-unstyled li {
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.list-unstyled li:last-child {
+    border-bottom: none;
+}
