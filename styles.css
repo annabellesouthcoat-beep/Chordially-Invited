@@ -58,21 +58,6 @@ body {
 .cta-btn { 
     background-color: var(--logo-gold); 
     color: #000; 
-
-    .home-cta {
-        padding: 12px 30px;
-        border-radius: 50px;
-        text-decoration: none;
-        font-weight: bold;
-        text-transform: uppercase;
-        display: inline-block;
-        transition: all 0.3s ease;
-    }
-
-    .home-cta:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    }
     padding: 12px 30px; 
     border-radius: 50px; 
     text-decoration: none; 
@@ -211,7 +196,7 @@ footer {
 
 .list-unstyled li:last-child {
     border-bottom: none;
-}/* Added: ensure .home-cta styles apply (fix nested-sass-like rules) */
+}/* Home CTA button styles */
 .home-cta {
   padding: 12px 30px;
   border-radius: 50px;
@@ -224,57 +209,7 @@ footer {
   background-color: transparent;
   border: none;
 }
-.home-cta:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-}
-/* Added: ensure .home-cta styles apply (fix nested-sass-like rules) */
-.home-cta {
-  padding: 12px 30px;
-  border-radius: 50px;
-  text-decoration: none;
-  font-weight: bold;
-  text-transform: uppercase;
-  display: inline-block;
-  transition: all 0.3s ease;
-  color: #000;
-  background-color: transparent;
-  border: none;
-}
-.home-cta:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-}
-/* Added: ensure .home-cta styles apply (fix nested-sass-like rules) */
-.home-cta {
-  padding: 12px 30px;
-  border-radius: 50px;
-  text-decoration: none;
-  font-weight: bold;
-  text-transform: uppercase;
-  display: inline-block;
-  transition: all 0.3s ease;
-  color: #000;
-  background-color: transparent;
-  border: none;
-}
-.home-cta:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-}
-/* Added: ensure .home-cta styles apply (fix nested-sass-like rules) */
-.home-cta {
-  padding: 12px 30px;
-  border-radius: 50px;
-  text-decoration: none;
-  font-weight: bold;
-  text-transform: uppercase;
-  display: inline-block;
-  transition: all 0.3s ease;
-  color: #000;
-  background-color: transparent;
-  border: none;
-}
+
 .home-cta:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 15px rgba(0,0,0,0.1);
