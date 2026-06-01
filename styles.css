@@ -58,6 +58,21 @@ body {
 .cta-btn { 
     background-color: var(--logo-gold); 
     color: #000; 
+
+    .home-cta {
+        padding: 12px 30px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: bold;
+        text-transform: uppercase;
+        display: inline-block;
+        transition: all 0.3s ease;
+    }
+
+    .home-cta:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
     padding: 12px 30px; 
     border-radius: 50px; 
     text-decoration: none; 
