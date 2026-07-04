@@ -163,6 +163,14 @@ footer {
 @media (max-width: 768px) {
     .blur-container { height: 280px; }
     .hero-section { padding: 60px 0; }
+    .setlist-grid {
+        grid-template-columns: 1fr;
+    }
+    .setlist-group.is-centered,
+    .setlist-group.is-left,
+    .setlist-group.is-right {
+        grid-column: auto;
+    }
 }
 /* Automated Sticky Sidebar Logic */
 .rig-box {
@@ -185,8 +193,27 @@ footer {
 }
 
 /* 3-Column Setlist Layout */
-.g-4 { 
-    gap: 1.5rem; 
+.setlist-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+    align-items: start;
+}
+
+.setlist-group {
+    margin-bottom: 0;
+}
+
+.setlist-group.is-centered {
+    grid-column: 2;
+}
+
+.setlist-group.is-left {
+    grid-column: 1;
+}
+
+.setlist-group.is-right {
+    grid-column: 3;
 }
 
 .list-unstyled li {
