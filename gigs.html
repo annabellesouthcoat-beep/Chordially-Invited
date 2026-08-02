@@ -87,34 +87,48 @@
                 });
 
                 if (upcomingGigs.length > 0) {
-                    const next = upcomingGigs[0];
+                // 1. Find the next PUBLIC gig for the Hero Banner
+                // This skips any row where the Venue or Info contains the word "private"
+                const nextPublic = upcomingGigs.find(gig => {
+                    const venueText = (gig.Venue || '').toLowerCase();
+                    const infoText = (gig.Info || '').toLowerCase();
+                    return !venueText.includes('private') && !infoText.includes('private');
+                });
 
-                    if (next.Venue_Link && next.Venue_Link.trim() !== "") {
-                        venueDisplay.innerHTML = `<a href="${next.Venue_Link.trim()}" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: underline;">${next.Venue}</a>`;
+                // Update Hero Banner (if a public gig exists)
+                if (nextPublic) {
+                    if (nextPublic.Venue_Link && nextPublic.Venue_Link.trim() !== "") {
+                        venueDisplay.innerHTML = `<a href="${nextPublic.Venue_Link.trim()}" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: underline;">${nextPublic.Venue}</a>`;
                     } else {
-                        venueDisplay.innerText = next.Venue;
+                        venueDisplay.innerText = nextPublic.Venue;
+                    }
+                    dateDisplay.innerHTML = `${nextPublic.Display_Date} <span class="mx-2">|</span> ${nextPublic.Location}`;
+                } else {
+                    // Fallback if your calendar is full but they are ALL private
+                    venueDisplay.innerText = "Private Events Booked";
+                    dateDisplay.innerHTML = "We are currently playing private functions. Next public date announcing soon!";
+                }
+
+                // 2. Populate Table (This continues to list ALL gigs, both public and private)
+                upcomingGigs.forEach(gig => {
+                    let venueContent = gig.Venue || '';
+
+                    // Check if a Venue_Link exists in your Google Sheet row
+                    if (gig.Venue_Link && gig.Venue_Link.trim() !== "") {
+                        venueContent = `<a href="${gig.Venue_Link.trim()}" target="_blank" rel="noopener noreferrer" style="color: var(--primary-blue); text-decoration: underline;">${gig.Venue}</a>`;
                     }
 
-                    dateDisplay.innerHTML = `${next.Display_Date} <span class="mx-2">|</span> ${next.Location}`;
-
-                    upcomingGigs.forEach(gig => {
-                        let venueContent = gig.Venue || '';
-
-                        if (gig.Venue_Link && gig.Venue_Link.trim() !== "") {
-                            venueContent = `<a href="${gig.Venue_Link.trim()}" target="_blank" rel="noopener noreferrer" style="color: var(--primary-blue); text-decoration: underline;">${gig.Venue}</a>`;
-                        }
-
-                        const row = document.createElement("tr");
-                        row.style.verticalAlign = "middle";
-                        row.innerHTML = `
-                            <th scope="row">${gig.Display_Date}</th>
-                            <td class="fw-bold">${venueContent}</td>
-                            <td>${gig.Location}</td>
-                            <td>${gig.Info || ''}</td>
-                        `;
-                        tableBody.appendChild(row);
-                    });
-                } else {
+                    const row = document.createElement("tr");
+                    row.style.verticalAlign = "middle";
+                    row.innerHTML = `
+                        <th scope="row">${gig.Display_Date}</th>
+                        <td class="fw-bold">${venueContent}</td>
+                        <td>${gig.Location}</td>
+                        <td>${gig.Info || ''}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            } else {
                     venueDisplay.innerText = "New Dates Coming Soon";
                     dateDisplay.innerText = "We’re currently updating our 2026 calendar.";
                     tableBody.innerHTML = `<tr><td colspan="4" class="text-center py-4 text-muted">Check back soon for new announcements!</td></tr>`;
