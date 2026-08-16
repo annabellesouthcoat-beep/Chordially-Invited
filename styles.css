@@ -243,3 +243,21 @@ footer {
     transform: translateY(-2px);
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
+/* Gallery thumbnail styling for uniform sizes */
+.gallery-thumbnail {
+    width: 100%;
+    aspect-ratio: 4 / 3; 
+    object-fit: cover; 
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.gallery-thumbnail:hover {
+    transform: scale(1.02);
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+}
+
+/* Hides extra images from the page but keeps them in the lightbox */
+.hidden-gallery-item {
+    display: none;
+}

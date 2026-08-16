@@ -5,6 +5,8 @@ title: "Chord-ially Invited | Media & Gallery"
 <html lang="en">
 
 {% include header.html %}
+<!-- Fancybox CSS for Lightbox -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
    
 <body>
 
@@ -16,6 +18,7 @@ title: "Chord-ially Invited | Media & Gallery"
             
             <h1 class="page-title text-center mb-5" style="color: var(--primary-blue); font-weight: 800; letter-spacing: 2px;">MEDIA <span style="color: #333;">| SIGHTS & SOUNDS</span></h1>
 
+            <!-- Audio Placeholder -->
             <section class="mb-5 py-4 px-3 rounded-4" style="background: #fff; border: 1px solid #eee;">
                 <h3 class="mb-4 text-center" style="color: var(--primary-blue); font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Studio & Live Demos</h3>
                 <div class="row justify-content-center">
@@ -29,17 +32,56 @@ title: "Chord-ially Invited | Media & Gallery"
                 </div>
             </section>
 
+            <!-- Lightbox Gallery Section -->
             <section class="mb-5">
                 <h3 class="mb-4" style="color: var(--primary-blue); font-weight: 700; text-transform: uppercase;">The Gallery</h3>
+                
                 <div class="row g-3">
-                    <div class="col-md-4"><img src="images/gallery-1.jpg" class="img-fluid rounded shadow-sm" alt="Live performance"></div>
-                    <div class="col-md-4"><img src="images/gallery-2.jpg" class="img-fluid rounded shadow-sm" alt="The Band"></div>
-                    <div class="col-md-4"><img src="images/gallery-3.jpg" class="img-fluid rounded shadow-sm" alt="Stage lights"></div>
-                    <div class="col-md-6"><img src="images/gallery-4.jpg" class="img-fluid rounded shadow-sm" alt="Guitars"></div>
-                    <div class="col-md-6"><img src="images/gallery-5.jpg" class="img-fluid rounded shadow-sm" alt="Crowd"></div>
+                    <!-- Visible Images (The main 6 photos on your page) -->
+                    <div class="col-6 col-md-4">
+                        <a href="images/Gig Photos/Annabelle Wedding/wedding-1.jpeg" data-fancybox="gallery" data-caption="Private wedding performance">
+                            <img src="images/Gig Photos/Annabelle Wedding/wedding-1.jpeg" class="img-fluid rounded shadow-sm gallery-thumbnail" alt="Private wedding performance">
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <a href="images/Gig Photos/Annabelle Wedding/wedding-2.jpeg" data-fancybox="gallery" data-caption="Private wedding performance">
+                            <img src="images/Gig Photos/Annabelle Wedding/wedding-2.jpeg" class="img-fluid rounded shadow-sm gallery-thumbnail" alt="Private wedding performance">
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <a href="images/Gig Photos/Annabelle Wedding/wedding-3.jpeg" data-fancybox="gallery" data-caption="Private wedding performance">
+                            <img src="images/Gig Photos/Annabelle Wedding/wedding-3.jpeg" class="img-fluid rounded shadow-sm gallery-thumbnail" alt="Private wedding performance">
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <a href="images/Gig Photos/Annabelle Wedding/wedding-4.jpeg" data-fancybox="gallery" data-caption="Private wedding performance">
+                            <img src="images/Gig Photos/Annabelle Wedding/wedding-4.jpeg" class="img-fluid rounded shadow-sm gallery-thumbnail" alt="Private wedding performance">
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <a href="images/Gig Photos/Annabelle Wedding/wedding-5.jpeg" data-fancybox="gallery" data-caption="Private wedding performance">
+                            <img src="images/Gig Photos/Annabelle Wedding/wedding-5.jpeg" class="img-fluid rounded shadow-sm gallery-thumbnail" alt="Private wedding performance">
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-4">
+                        <a href="images/Gig Photos/Annabelle Wedding/wedding-6.jpeg" data-fancybox="gallery" data-caption="Private wedding performance">
+                            <img src="images/Gig Photos/Annabelle Wedding/wedding-6.jpeg" class="img-fluid rounded shadow-sm gallery-thumbnail" alt="Private wedding performance">
+                        </a>
+                    </div>
+
+                    <!-- Hidden Images (Infinite repository! Paste more of these lines as you get new photos) -->
+                    <a href="images/Gig Photos/Annabelle Wedding/wedding-7.jpeg" data-fancybox="gallery" data-caption="Louise captivates a wedding guests" class="hidden-gallery-item"></a>
+                    <a href="images/Gig Photos/Annabelle Wedding/wedding-8.jpeg" data-fancybox="gallery" data-caption="Louise and Bella turning up the power" class="hidden-gallery-item"></a>
+                    <a href="images/Gig Photos/Annabelle Wedding/wedding-9.jpeg" data-fancybox="gallery" data-caption="Ollie front and center" class="hidden-gallery-item"></a>
+                    <a href="images/Gig Photos/Annabelle Wedding/wedding-10.jpg" data-fancybox="gallery" data-caption="Bob keeping it cool on a very hot day" class="hidden-gallery-item"></a>
+                    <a href="images/Gig Photos/Annabelle Wedding/wedding-11.jpeg" data-fancybox="gallery" data-caption="Richard performing at his best" class="hidden-gallery-item"></a>
+                    <a href="images/Gig Photos/Annabelle Wedding/wedding-12.jpeg" data-fancybox="gallery" data-caption="Bella in the zone" class="hidden-gallery-item"></a>
+                    <a href="images/Gig Photos/Annabelle Wedding/wedding-13.jpg" data-fancybox="gallery" data-caption="Bella's new wife can't help herself" class="hidden-gallery-item"></a>
+                </div>
                 </div>
             </section>
 
+            <!-- Video Placeholder -->
             <section class="mb-5">
                 <h3 class="mb-4" style="color: var(--primary-blue); font-weight: 700; text-transform: uppercase;">Live Performance</h3>
                 <div class="ratio ratio-16x9 rounded-4 overflow-hidden bg-dark shadow-sm">
@@ -53,6 +95,7 @@ title: "Chord-ially Invited | Media & Gallery"
                 </div>
             </section>
 
+            <!-- Call to Action -->
             <div class="text-center mt-5 py-5 border-top">
                 <h3 class="fw-bold">Ready to experience it live?</h3>
                 <a href="contact.html" class="cta-btn d-block text-center mx-auto mt-4" style="max-width: 300px;">Book The Band</a>
@@ -61,9 +104,17 @@ title: "Chord-ially Invited | Media & Gallery"
     </div>
 </main>
 
- {% include footer.html %}
+{% include footer.html %}
 
-
+<!-- Bootstrap & Fancybox Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+<script>
+    // Initialize the lightbox
+    Fancybox.bind('[data-fancybox="gallery"]', {
+        loop: true,
+        buttons: ["zoom", "slideShow", "fullScreen", "close"],
+    });
+</script>
 </body>
 </html>
