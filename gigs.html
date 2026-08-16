@@ -6,7 +6,6 @@
 
 {% include header.html %}
 
-   
 <body>
 
 {% include navbar.html %}
@@ -24,13 +23,14 @@
                 <div style="width: 60px; height: 4px; background: var(--logo-gold); margin: 0 auto;"></div>
             </div>
 
+            <!-- UPCOMING GIGS SECTION -->
             <div class="d-flex align-items-center justify-content-center mb-4">
                 <div style="flex-grow: 1; height: 1px; background: #eee; max-width: 100px;"></div>
                 <span class="mx-3 small text-muted text-uppercase fw-bold" style="letter-spacing: 2px;">Full Schedule</span>
                 <div style="flex-grow: 1; height: 1px; background: #eee; max-width: 100px;"></div>
             </div>
 
-            <div class="table-responsive">
+            <div class="table-responsive mb-5">
                <table class="table gigs-table">
                     <thead>
                         <tr>
@@ -41,8 +41,26 @@
                         </tr>
                     </thead>
                     <tbody id="gigs-list">
-                        </tbody>
+                        <!-- Upcoming gigs load here -->
+                    </tbody>
                </table>
+            </div>
+
+            <!-- PAST GIGS SECTION (Hidden by default until populated) -->
+            <div id="past-gigs-container" style="display: none;">
+                <div class="d-flex align-items-center justify-content-center mb-4 mt-5">
+                    <div style="flex-grow: 1; height: 1px; background: #eee; max-width: 100px;"></div>
+                    <span class="mx-3 small text-muted text-uppercase fw-bold" style="letter-spacing: 2px;">Recent Performances</span>
+                    <div style="flex-grow: 1; height: 1px; background: #eee; max-width: 100px;"></div>
+                </div>
+
+                <div class="table-responsive">
+                   <table class="table gigs-table text-muted" style="opacity: 0.75;">
+                        <tbody id="past-gigs-list">
+                            <!-- Past gigs load here -->
+                        </tbody>
+                   </table>
+                </div>
             </div>
 
             <div class="bg-white p-5 rounded border mt-5 text-center shadow-sm">
@@ -66,6 +84,8 @@
         const venueDisplay = document.getElementById("next-venue");
         const dateDisplay = document.getElementById("next-date-time");
         const tableBody = document.getElementById("gigs-list");
+        const pastTableBody = document.getElementById("past-gigs-list");
+        const pastGigsContainer = document.getElementById("past-gigs-container");
 
         const sheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTPfgs0-2mCcPgoHXwgHiNoNmYU0Wmp9Y3G0a79xQsV5tLDYFY_9CSOLWGsrk10OUQUh6M2l3A29_-K/pub?output=csv";
 
@@ -76,62 +96,100 @@
             return;
         }
 
+        // Setup Dates for Comparison
+        const todayStr = new Date().toISOString().split('T')[0]; // Gets today as YYYY-MM-DD
+        const lastYearDate = new Date();
+        lastYearDate.setFullYear(lastYearDate.getFullYear() - 1);
+        const lastYearStr = lastYearDate.toISOString().split('T')[0]; // Gets 12 months ago as YYYY-MM-DD
+
         Papa.parse(sheetUrl, {
             download: true,
             header: true,
             skipEmptyLines: true,
             complete: function (results) {
-                const upcomingGigs = (results.data || []).filter(gig => {
-                    const hasDate = gig.Display_Date && gig.Display_Date.trim() !== "";
-                    return hasDate;
+                const upcomingGigs = [];
+                const pastGigs = [];
+
+                // 1. Sort into Upcoming, Past (within 12 months), or Ignore (older than 12 months)
+                (results.data || []).forEach(gig => {
+                    if (!gig.Display_Date || gig.Display_Date.trim() === "") return;
+
+                    // UPDATED: Now looks for ISO_Date instead of Sort_Date
+                    const sortDate = gig.ISO_Date ? gig.ISO_Date.trim() : "";
+
+                    if (!sortDate) {
+                        // If no ISO_Date exists, default to upcoming to prevent breaking
+                        upcomingGigs.push(gig);
+                    } else if (sortDate >= todayStr) {
+                        upcomingGigs.push(gig); // It's in the future or today
+                    } else if (sortDate >= lastYearStr && sortDate < todayStr) {
+                        pastGigs.push(gig); // It's in the past, but within the last year
+                    }
                 });
 
+                // 2. Handle Upcoming Gigs Table & Banner
                 if (upcomingGigs.length > 0) {
-                // 1. Find the next PUBLIC gig for the Hero Banner
-                // This skips any row where the Venue or Info contains the word "private"
-                const nextPublic = upcomingGigs.find(gig => {
-                    const venueText = (gig.Venue || '').toLowerCase();
-                    const infoText = (gig.Info || '').toLowerCase();
-                    return !venueText.includes('private') && !infoText.includes('private');
-                });
+                    // Find the next PUBLIC gig for the Hero Banner
+                    const nextPublic = upcomingGigs.find(gig => {
+                        const venueText = (gig.Venue || '').toLowerCase();
+                        const infoText = (gig.Info || '').toLowerCase();
+                        return !venueText.includes('private') && !infoText.includes('private');
+                    });
 
-                // Update Hero Banner (if a public gig exists)
-                if (nextPublic) {
-                    if (nextPublic.Venue_Link && nextPublic.Venue_Link.trim() !== "") {
-                        venueDisplay.innerHTML = `<a href="${nextPublic.Venue_Link.trim()}" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: underline;">${nextPublic.Venue}</a>`;
+                    // Update Hero Banner
+                    if (nextPublic) {
+                        if (nextPublic.Venue_Link && nextPublic.Venue_Link.trim() !== "") {
+                            venueDisplay.innerHTML = `<a href="${nextPublic.Venue_Link.trim()}" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: underline;">${nextPublic.Venue}</a>`;
+                        } else {
+                            venueDisplay.innerText = nextPublic.Venue;
+                        }
+                        dateDisplay.innerHTML = `${nextPublic.Display_Date} <span class="mx-2">|</span> ${nextPublic.Location}`;
                     } else {
-                        venueDisplay.innerText = nextPublic.Venue;
+                        venueDisplay.innerText = "Private Events Booked";
+                        dateDisplay.innerHTML = "We are currently playing private functions. Next public date announcing soon!";
                     }
-                    dateDisplay.innerHTML = `${nextPublic.Display_Date} <span class="mx-2">|</span> ${nextPublic.Location}`;
+
+                    // Populate Upcoming Table
+                    upcomingGigs.forEach(gig => {
+                        let venueContent = gig.Venue || '';
+                        if (gig.Venue_Link && gig.Venue_Link.trim() !== "") {
+                            venueContent = `<a href="${gig.Venue_Link.trim()}" target="_blank" rel="noopener noreferrer" style="color: var(--primary-blue); text-decoration: underline;">${gig.Venue}</a>`;
+                        }
+
+                        const row = document.createElement("tr");
+                        row.style.verticalAlign = "middle";
+                        row.innerHTML = `
+                            <th scope="row" style="width: 20%;">${gig.Display_Date}</th>
+                            <td class="fw-bold">${venueContent}</td>
+                            <td>${gig.Location}</td>
+                            <td>${gig.Info || ''}</td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
                 } else {
-                    // Fallback if your calendar is full but they are ALL private
-                    venueDisplay.innerText = "Private Events Booked";
-                    dateDisplay.innerHTML = "We are currently playing private functions. Next public date announcing soon!";
-                }
-
-                // 2. Populate Table (This continues to list ALL gigs, both public and private)
-                upcomingGigs.forEach(gig => {
-                    let venueContent = gig.Venue || '';
-
-                    // Check if a Venue_Link exists in your Google Sheet row
-                    if (gig.Venue_Link && gig.Venue_Link.trim() !== "") {
-                        venueContent = `<a href="${gig.Venue_Link.trim()}" target="_blank" rel="noopener noreferrer" style="color: var(--primary-blue); text-decoration: underline;">${gig.Venue}</a>`;
-                    }
-
-                    const row = document.createElement("tr");
-                    row.style.verticalAlign = "middle";
-                    row.innerHTML = `
-                        <th scope="row">${gig.Display_Date}</th>
-                        <td class="fw-bold">${venueContent}</td>
-                        <td>${gig.Location}</td>
-                        <td>${gig.Info || ''}</td>
-                    `;
-                    tableBody.appendChild(row);
-                });
-            } else {
                     venueDisplay.innerText = "New Dates Coming Soon";
                     dateDisplay.innerText = "We’re currently updating our 2026 calendar.";
                     tableBody.innerHTML = `<tr><td colspan="4" class="text-center py-4 text-muted">Check back soon for new announcements!</td></tr>`;
+                }
+
+                // 3. Handle Past Gigs Table
+                if (pastGigs.length > 0) {
+                    // Show the past gigs section
+                    pastGigsContainer.style.display = "block";
+
+                    // Reverse the array so the most recent past gigs show first
+                    pastGigs.reverse().forEach(gig => {
+                        const row = document.createElement("tr");
+                        row.style.verticalAlign = "middle";
+                        // We intentionally drop the "Info" column and links here for a cleaner look
+                        row.innerHTML = `
+                            <th scope="row" style="width: 20%; text-decoration: line-through;">${gig.Display_Date}</th>
+                            <td class="fst-italic">${gig.Venue || ''}</td>
+                            <td>${gig.Location}</td>
+                            <td><span class="badge bg-secondary opacity-50">Completed</span></td>
+                        `;
+                        pastTableBody.appendChild(row);
+                    });
                 }
             },
             error: function (err) {
@@ -143,3 +201,5 @@
         });
     });
 </script>
+</body>
+</html>
