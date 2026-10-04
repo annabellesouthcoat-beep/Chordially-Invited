@@ -1,0 +1,27 @@
+{% assign gallery = site.data.galleries[include.key] %}
+
+{% for item in gallery.photos %}
+  {% assign image_path = gallery.folder | append: '/' | append: item.file %}
+  
+  {% comment %} Resolve custom caption or default fallback {% endcomment %}
+  {% assign base_caption = item.caption | default: gallery.default_caption %}
+  
+  {% comment %} Resolve custom credit or default credit {% endcomment %}
+  {% assign photo_credit = item.credit | default: gallery.credit %}
+  
+  {% comment %} Build the full caption string {% endcomment %}
+  {% capture full_caption %}{{ base_caption }}{% if photo_credit %}. Photo by {{ photo_credit }}{% endif %}{% endcapture %}
+  {% assign full_caption = full_caption | strip %}
+
+  {% if item.file == gallery.cover %}
+    <!-- Main visible cover thumbnail -->
+    <div class="col-6 col-md-4">
+      <a href="{{ image_path | relative_url }}" data-fancybox="{{ include.key }}" data-caption="{{ full_caption }}">
+        <img src="{{ image_path | relative_url }}" class="img-fluid rounded shadow-sm gallery-thumbnail" alt="{{ base_caption }}">
+      </a>
+    </div>
+  {% else %}
+    <!-- Hidden link for Fancybox lightbox series -->
+    <a href="{{ image_path | relative_url }}" data-fancybox="{{ include.key }}" data-caption="{{ full_caption }}" class="hidden-gallery-item"></a>
+  {% endif %}
+{% endfor %}
