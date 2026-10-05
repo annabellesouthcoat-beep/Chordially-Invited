@@ -1,15 +1,12 @@
 {% assign gallery = site.data.galleries[include.key] %}
 {% assign gallery_folder = include.folder | remove_first: "/" %}
-{% capture folder_prefix %}{{ gallery_folder }}/{% endcapture %}
-{% assign folder_prefix_length = folder_prefix | size %}
-{% assign image_files = site.static_files | sort: "path" %}
+{% assign folder_marker = gallery_folder | append: "/" %}
 {% assign allowed_extensions = "jpg,jpeg,png,gif,webp" | split: "," %}
 
-{% for file in image_files %}
+{% for file in site.static_files %}
   {% assign file_path = file.path | remove_first: "/" %}
-  {% assign file_prefix = file_path | slice: 0, folder_prefix_length %}
-  {% if file_prefix == folder_prefix %}
-    {% assign image_name = file_path | remove_first: folder_prefix %}
+  {% if file_path contains folder_marker %}
+    {% assign image_name = file_path | split: folder_marker | last %}
     {% unless image_name contains "/" %}
       {% assign extension = image_name | split: "." | last | downcase %}
       {% if allowed_extensions contains extension %}
