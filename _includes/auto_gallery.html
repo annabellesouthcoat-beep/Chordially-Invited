@@ -1,5 +1,5 @@
 {% assign gallery = site.data.galleries[include.key] %}
-{% assign gallery_folder = include.folder | remove_first: "/" %}
+{% assign gallery_folder = include.folder %}
 {% assign expected_directory = gallery_folder | append: "/" %}
 {% assign allowed_extensions = "jpg,jpeg,png,gif,webp" | split: "," %}
 {% assign cover_name = include.cover | downcase %}
@@ -16,7 +16,7 @@
 </div>
 
 {% for file in site.static_files %}
-  {% assign file_path = file.path | remove_first: "/" %}
+  {% assign file_path = file.path %}
   {% assign image_name = file.name %}
   {% if file_path contains expected_directory %}
     {% assign extension = image_name | split: "." | last | downcase %}
