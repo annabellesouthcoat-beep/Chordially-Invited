@@ -1,32 +1,31 @@
 {% assign gallery = site.data.galleries[include.key] %}
 {% assign gallery_folder = include.folder | remove_first: "/" %}
-{% assign folder_marker = gallery_folder | append: "/" %}
+{% assign expected_directory = gallery_folder | append: "/" %}
 {% assign allowed_extensions = "jpg,jpeg,png,gif,webp" | split: "," %}
 
 {% for file in site.static_files %}
   {% assign file_path = file.path | remove_first: "/" %}
-  {% if file_path contains folder_marker %}
-    {% assign image_name = file_path | split: folder_marker | last %}
-    {% unless image_name contains "/" %}
-      {% assign extension = image_name | split: "." | last | downcase %}
-      {% if allowed_extensions contains extension %}
-        {% assign normalized_image_name = image_name | downcase %}
-        {% assign normalized_cover = include.cover | downcase %}
-        {% assign override = gallery.overrides[normalized_image_name] %}
-        {% assign caption = override.caption | default: gallery.default_caption %}
-        {% capture full_caption %}{{ caption }}{% if gallery.credit %}. Photo by {{ gallery.credit }}{% endif %}{% endcapture %}
-        {% assign full_caption = full_caption | strip %}
+  {% assign image_name = file.name %}
+  {% assign file_directory = file_path | remove: image_name %}
+  {% if file_directory == expected_directory %}
+    {% assign extension = image_name | split: "." | last | downcase %}
+    {% if allowed_extensions contains extension %}
+      {% assign normalized_image_name = image_name | downcase %}
+      {% assign normalized_cover = include.cover | downcase %}
+      {% assign override = gallery.overrides[normalized_image_name] %}
+      {% assign caption = override.caption | default: gallery.default_caption %}
+      {% capture full_caption %}{{ caption }}{% if gallery.credit %}. Photo by {{ gallery.credit }}{% endif %}{% endcapture %}
+      {% assign full_caption = full_caption | strip %}
 
-        {% if normalized_image_name == normalized_cover %}
-          <div class="col-6 col-md-4">
-            <a href="{{ file_path | prepend: '/' | relative_url }}" data-fancybox="{{ include.key }}" data-caption="{{ full_caption | escape }}">
-              <img src="{{ file_path | prepend: '/' | relative_url }}" class="img-fluid rounded shadow-sm gallery-thumbnail" alt="{{ caption | escape }}">
-            </a>
-          </div>
-        {% else %}
-          <a href="{{ file_path | prepend: '/' | relative_url }}" data-fancybox="{{ include.key }}" data-caption="{{ full_caption | escape }}" class="hidden-gallery-item"></a>
-        {% endif %}
+      {% if normalized_image_name == normalized_cover %}
+        <div class="col-6 col-md-4">
+          <a href="{{ file_path | prepend: '/' | relative_url }}" data-fancybox="{{ include.key }}" data-caption="{{ full_caption | escape }}">
+            <img src="{{ file_path | prepend: '/' | relative_url }}" class="img-fluid rounded shadow-sm gallery-thumbnail" alt="{{ caption | escape }}">
+          </a>
+        </div>
+      {% else %}
+        <a href="{{ file_path | prepend: '/' | relative_url }}" data-fancybox="{{ include.key }}" data-caption="{{ full_caption | escape }}" class="hidden-gallery-item"></a>
       {% endif %}
-    {% endunless %}
+    {% endif %}
   {% endif %}
 {% endfor %}
