@@ -6,8 +6,7 @@
 {% for file in site.static_files %}
   {% assign file_path = file.path | remove_first: "/" %}
   {% assign image_name = file.name %}
-  {% assign file_directory = file_path | remove: image_name %}
-  {% if file_directory == expected_directory %}
+  {% if file_path contains expected_directory %}
     {% assign extension = image_name | split: "." | last | downcase %}
     {% if allowed_extensions contains extension %}
       {% assign normalized_image_name = image_name | downcase %}
