@@ -2,6 +2,18 @@
 {% assign gallery_folder = include.folder | remove_first: "/" %}
 {% assign expected_directory = gallery_folder | append: "/" %}
 {% assign allowed_extensions = "jpg,jpeg,png,gif,webp" | split: "," %}
+{% assign cover_name = include.cover | downcase %}
+{% assign cover_override = gallery.overrides[cover_name] %}
+{% assign cover_caption = cover_override.caption | default: gallery.default_caption %}
+{% capture cover_full_caption %}{{ cover_caption }}{% if gallery.credit %}. Photo by {{ gallery.credit }}{% endif %}{% endcapture %}
+{% assign cover_full_caption = cover_full_caption | strip %}
+{% assign cover_path = expected_directory | append: include.cover %}
+
+<div class="col-6 col-md-4">
+  <a href="{{ cover_path | relative_url }}" data-fancybox="{{ include.key }}" data-caption="{{ cover_full_caption | escape }}">
+    <img src="{{ cover_path | relative_url }}" class="img-fluid rounded shadow-sm gallery-thumbnail" alt="{{ cover_caption | escape }}">
+  </a>
+</div>
 
 {% for file in site.static_files %}
   {% assign file_path = file.path | remove_first: "/" %}
@@ -10,21 +22,15 @@
     {% assign extension = image_name | split: "." | last | downcase %}
     {% if allowed_extensions contains extension %}
       {% assign normalized_image_name = image_name | downcase %}
-      {% assign normalized_cover = include.cover | downcase %}
       {% assign override = gallery.overrides[normalized_image_name] %}
       {% assign caption = override.caption | default: gallery.default_caption %}
       {% capture full_caption %}{{ caption }}{% if gallery.credit %}. Photo by {{ gallery.credit }}{% endif %}{% endcapture %}
       {% assign full_caption = full_caption | strip %}
 
-      {% if normalized_image_name == normalized_cover %}
-        <div class="col-6 col-md-4">
-          <a href="{{ file_path | prepend: '/' | relative_url }}" data-fancybox="{{ include.key }}" data-caption="{{ full_caption | escape }}">
-            <img src="{{ file_path | prepend: '/' | relative_url }}" class="img-fluid rounded shadow-sm gallery-thumbnail" alt="{{ caption | escape }}">
-          </a>
-        </div>
-      {% else %}
-        <a href="{{ file_path | prepend: '/' | relative_url }}" data-fancybox="{{ include.key }}" data-caption="{{ full_caption | escape }}" class="hidden-gallery-item"></a>
-      {% endif %}
+      {% unless normalized_image_name == cover_name %}
+        {% assign image_path = expected_directory | append: image_name %}
+        <a href="{{ image_path | relative_url }}" data-fancybox="{{ include.key }}" data-caption="{{ full_caption | escape }}" class="hidden-gallery-item"></a>
+      {% endunless %}
     {% endif %}
   {% endif %}
 {% endfor %}
