@@ -1,5 +1,6 @@
 belle_wedding:
   default_caption: "Private wedding performance"
+  credit: "<a href='https://www.carlosazevedophotography.co.uk/' target='_blank'>Carlos Azevedo Photography</a>"
   overrides:
     "wedding-2.jpg":
       caption: "Louise captivates wedding guests"
